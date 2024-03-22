@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AviaTickets - Пошук та бронювання квитків</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="photo/plane.png" alt="AviaTickets">
+      <p>AviaTickets</p>
+    </div>
+    
+    <nav>
+      <ul class="nav-links">
+          <li><a href="#">Рейси</a></li>
+          <li><a href="#" id="search-flights-link">Бронювання</a></li>
+          <li><a href="#">Увійти</a></li>
+      </ul>
+  </nav>
+  
+
+
+
+  </header>
+  <div id="booking-overlay" class="booking-overlay">
+    <section id="booking" class="booking">
+      <div class="booking-container">
+        <h2>Бронювання квитків</h2>
+        <form id="booking-form">
+          <label for="route">Маршрут:</label>
+          <input type="text" id="route" name="route" required>
+          <label for="passenger-name">ПІБ пасажира:</label>
+          <input type="text" id="passenger-name" name="passenger-name" required>
+          <label for="email">Електронна пошта:</label>
+          <input type="email" id="email" name="email" required>
+          <label for="phone">Номер телефону:</label>
+          <input type="tel" id="phone" name="phone" pattern="(?:\+38)?0\d{2}-\d{3}-\d{2}-\d{2}" required>
+          <label for="card-number">Номер картки:</label>
+          <input type="text" id="card-number" name="card-number" pattern="\d{4} \d{4} \d{4} \d{4}" required>
+          <label for="payment-method">Метод оплати:</label>
+          <select id="payment-method" name="payment-method" required>
+            <option value="credit-card">Кредитна карта</option>
+            <option value="paypal">PayPal</option>
+          </select>
+          <button type="submit">Забронювати</button>
+        </form>
+        <div id="booking-status" class="booking-status"></div>
+        <span id="close-button">×</span>
+      </div>
+    </section>
+  </div>
+  
+  <div id="cart-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeCart()">&times;</span>
+      <div id="cart-items" class="cart"></div>
+      <div id="payment-form">
+        <input type="text" placeholder="Имя" id="name-input">
+        <input type="text" placeholder="Адрес" id="address-input">
+        <input type="text" placeholder="Номер карты" id="card-number-input">
+        <input type="text" placeholder="СVV код" id="cvv-input">
+        <button type="submit" onclick="processPayment()">Оплатить</button>
+      </div>
+    </div>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="#cart" onclick="openCart()"><img src="photo/cart.png" alt="Корзина" class="cart-icon"></a></li>
+
+    </ul>
+  </nav>
+  <div id="cart-overlay" class="cart-overlay">
+    <div id="cart" class="cart">
+
+    </div>
+  </div>
+  <section class="banner">
+    <div class="slider">
+      <div class="slide">
+        <img src="photo/usa.jpg" alt="Slide 1">
+      </div>
+      <div class="slide">
+        <img src="photo/barselona.jpg" alt="Slide 3">
+      </div>
+      <div class="slide">
+        <img src="photo/paris.2.jpg" alt="Slide 2">
+      </div>
+      <div class="slide">
+        <img src="photo/tyrkish.jpg" alt="Slide 4">
+      </div>
+      <div class="slide">
+        <img src="photo/italish.jpg" alt="Slide 5">
+      </div>
+      <div class="slide">
+        <img src="photo/mehiko.jpg" alt="Slide 6">
+      </div>
+
+      <div class="navigation">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span>
+        <span class="dot" onclick="currentSlide(6)"></span>
+      </div>
+    </div>
+  </section>  
+  
+  <div id="booking-overlay"></div>
+  
+  <section id="destinations">
+    <h2>Популярні маршрути</h2>
+    <div class="destination-grid">
+      <div class="top-row">
+        <div class="destination-container">
+          <img src="photo/kiev.jpg" alt="Київ - Лондон">
+          <div class="destination-info">
+            <span class="destination-name">Київ - Лондон</span>
+            <span class="destination-price">Ціна: $700</span>
+            <button class="buy-ticket" data-route="Київ - Лондон" onclick="addToCart(this)">Купить билет</button>
+          </div>
+        </div>
+        <div class="destination-container">
+          <img src="photo/london.jpg" alt="Лондон - Київ">
+          <div class="destination-info">
+            <span class="destination-name">Лондон - Київ</span>
+            <span class="destination-price">Ціна: $450</span>
+            <button class="buy-ticket" data-route="Лондон - Київ" onclick="addToCart(this)">Купить билет</button>
+          </div>
+        </div>
+        <div class="destination-container">
+          <img src="photo/paris.jpg" alt="Париж">
+          <div class="destination-info">
+            <span class="destination-name">Париж</span>
+            <span class="destination-price">Ціна: $500</span>
+            <button class="buy-ticket" data-route="Париж" onclick="addToCart(this)">Купить билет</button>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-row">
+        <div class="destination-container">
+          <img src="photo/madrid.jpg" alt="Мадрид">
+          <div class="destination-info">
+            <span class="destination-name">Мадрид</span>
+            <span class="destination-price">Ціна: $600</span>
+            <button class="buy-ticket" data-route="Мадрид" onclick="addToCart(this)">Купить билет</button>
+          </div>
+        </div>
+        <div class="destination-container">
+          <img src="photo/warsawa.jpg" alt="Варшава">
+          <div class="destination-info">
+            <span class="destination-name">Варшава</span>
+            <span class="destination-price">Ціна: $200</span>
+            <button class="buy-ticket" data-route="Варшава" onclick="addToCart(this)">Купить билет</button>
+          </div>
+        </div>
+        <div class="destination-container">
+          <img src="photo/berlin.jpg" alt="Берлін - Варшава">
+          <div class="destination-info">
+            <span class="destination-name">Берлін - Варшава</span>
+            <span class="destination-price">Ціна: $150</span>
+            <button class="buy-ticket" data-route="Берлін - Варшава" onclick="addToCart(this)">Купить билет</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ 
+
+  <footer>
+    <div class="social-links">
+      <a href="https://www.instagram.com/" target="_blank"><img src="photo/instagram.png" alt="Instagram"></a>
+      <a href="https://www.facebook.com/" target="_blank"><img src="photo/facebook.png" alt="Facebook"></a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
